@@ -10,16 +10,12 @@ import type { Employee } from '../../types';
 
 export const AdminAttendanceView: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-<<<<<<< HEAD
-  const [currentDate, setCurrentDate] = useState<Date>(new Date('2025-10-22T00:00:00'));
-=======
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const [employeesList] = useState<Employee[]>(() => {
     const saved = localStorage.getItem('pp_employees');
     return saved ? JSON.parse(saved) : mockEmployees;
   });
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
 
   const handlePrevDay = () => {
     const newDate = new Date(currentDate);
@@ -33,9 +29,6 @@ export const AdminAttendanceView: React.FC = () => {
     setCurrentDate(newDate);
   };
 
-<<<<<<< HEAD
-  const filteredEmployees = mockEmployees.filter(emp =>
-=======
   const getAttendanceForDate = (empId: string) => {
     const pad = (num: number) => String(num).padStart(2, '0');
     const selectedDateStr = `${pad(currentDate.getDate())}/${pad(currentDate.getMonth() + 1)}/${currentDate.getFullYear()}`;
@@ -76,8 +69,7 @@ export const AdminAttendanceView: React.FC = () => {
     };
   };
 
-  const filteredEmployees = employeesList.filter(emp => 
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
+  const filteredEmployees = employeesList.filter(emp =>
     emp.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -136,26 +128,6 @@ export const AdminAttendanceView: React.FC = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-<<<<<<< HEAD
-            {filteredEmployees.map((emp) => (
-              <TableRow key={emp.id}>
-                <TableCell className="font-medium">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={emp.avatarUrl}
-                      alt={emp.name}
-                      className="h-8 w-8 rounded-full object-cover border border-border/50"
-                    />
-                    <span>{emp.name}</span>
-                  </div>
-                </TableCell>
-                <TableCell>10:00</TableCell>
-                <TableCell>19:00</TableCell>
-                <TableCell>09:00</TableCell>
-                <TableCell>01:00</TableCell>
-              </TableRow>
-            ))}
-=======
             {filteredEmployees.map((emp) => {
               const record = getAttendanceForDate(emp.id);
               return (
@@ -180,7 +152,6 @@ export const AdminAttendanceView: React.FC = () => {
                 </TableRow>
               );
             })}
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
             {filteredEmployees.length === 0 && (
               <TableRow>
                 <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
