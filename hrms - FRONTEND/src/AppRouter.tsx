@@ -7,6 +7,8 @@ import SignUpPage from './pages/SignUpPage';
 import DashboardPage from './pages/DashboardPage';
 import EmployeeProfilePage from './pages/EmployeeProfilePage';
 import AttritionPage from './pages/AttritionPage';
+import AttendancePage from './pages/AttendancePage';
+import TimeOffPage from './pages/TimeOffPage';
 import { Clock } from 'lucide-react';
 
 // Route Guard to redirect unauthenticated users to Login
@@ -89,7 +91,7 @@ export const AppRouter: React.FC = () => {
           element={
             <ProtectedRoute>
               <AppShell>
-                <PlaceholderPage title="Attendance Tracker" />
+                <AttendancePage />
               </AppShell>
             </ProtectedRoute>
           }
@@ -99,7 +101,7 @@ export const AppRouter: React.FC = () => {
           element={
             <ProtectedRoute>
               <AppShell>
-                <PlaceholderPage title="Time Off Management" />
+                <TimeOffPage />
               </AppShell>
             </ProtectedRoute>
           }
