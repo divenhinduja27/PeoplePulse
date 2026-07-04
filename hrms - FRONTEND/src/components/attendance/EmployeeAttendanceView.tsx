@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 
 export const EmployeeAttendanceView: React.FC = () => {
-  const { currentUser } = useUser();
+  const { currentUser, isCheckedIn, checkInTime } = useUser();
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const handlePrevMonth = () => {
@@ -27,13 +27,32 @@ export const EmployeeAttendanceView: React.FC = () => {
   const attendanceHistory = (() => {
     const key = `pp_attendance_${currentUser.id}`;
     const saved = localStorage.getItem(key);
-    return saved ? JSON.parse(saved) : [
+    const list = saved ? JSON.parse(saved) : [
       { date: '28/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
       { date: '29/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
       { date: '30/10/2025', checkIn: '09:45', checkOut: '18:45', workHours: '09:00', extraHours: '00:00' },
       { date: '31/10/2025', checkIn: '10:15', checkOut: '19:30', workHours: '09:15', extraHours: '01:15' },
       { date: '01/11/2025', checkIn: '10:00', checkOut: '18:00', workHours: '08:00', extraHours: '00:00' },
     ];
+
+    if (isCheckedIn && checkInTime) {
+      const checkInDate = new Date(checkInTime);
+      const pad = (num: number) => String(num).padStart(2, '0');
+      const day = pad(checkInDate.getDate());
+      const month = pad(checkInDate.getMonth() + 1);
+      const year = checkInDate.getFullYear();
+      const dateStr = `${day}/${month}/${year}`;
+      const checkInStr = `${pad(checkInDate.getHours())}:${pad(checkInDate.getMinutes())}`;
+      
+      list.push({
+        date: dateStr,
+        checkIn: checkInStr,
+        checkOut: 'Active',
+        workHours: 'Active',
+        extraHours: '--:--'
+      });
+    }
+    return list;
   })();
 
   const presentDays = attendanceHistory.length;

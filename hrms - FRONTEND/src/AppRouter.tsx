@@ -19,6 +19,18 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
+// Route Guard to redirect non-admin users to Home
+const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { currentUser } = useUser();
+  if (!currentUser) {
+    return <Navigate to="/login" replace />;
+  }
+  if (currentUser.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
+  return <>{children}</>;
+};
+
 // Route Guard to redirect authenticated users away from Login/SignUp
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser } = useUser();
@@ -94,11 +106,11 @@ export const AppRouter: React.FC = () => {
         <Route
           path="/attrition"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <AppShell>
                 <AttritionPage />
               </AppShell>
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
 

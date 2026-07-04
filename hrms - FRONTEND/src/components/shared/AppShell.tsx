@@ -193,18 +193,20 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             <Calendar className="h-4 w-4" />
             <span>Time Off</span>
           </NavLink>
-          <NavLink
-            to="/attrition"
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
-                ? 'bg-card text-foreground shadow-sm'
-                : 'text-muted-foreground hover:text-foreground'
-              }`
-            }
-          >
-            <BrainCircuit className="h-4 w-4" />
-            <span>AI Attrition</span>
-          </NavLink>
+          {currentUser?.role === 'admin' && (
+            <NavLink
+              to="/attrition"
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
+                  ? 'bg-card text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+                }`
+              }
+            >
+              <BrainCircuit className="h-4 w-4" />
+              <span>AI Attrition</span>
+            </NavLink>
+          )}
         </nav>
 
         {/* User Info and Dropdown */}

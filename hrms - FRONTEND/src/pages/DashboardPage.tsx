@@ -91,7 +91,7 @@ export const DashboardPage: React.FC = () => {
     const nextSerial = employeesInYear.length + 1;
 
     // 2. Generate Login ID
-    const loginId = generateLoginId('PP', firstName, lastName, joinYear, nextSerial);
+    const loginId = generateLoginId('OI', firstName, lastName, joinYear, nextSerial);
 
     // 3. Auto-generate temporary password
     const randomChars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
