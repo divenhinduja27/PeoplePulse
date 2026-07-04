@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { AvatarMenu } from './AvatarMenu';
-import { Sparkles, Calendar, Clock, Users, BrainCircuit } from 'lucide-react';
+import { Sparkles, Calendar, Clock, Users, BrainCircuit, AlertTriangle, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AppShellProps {
@@ -13,6 +13,97 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const { currentUser, isCheckedIn, checkInTime, toggleCheckIn } = useUser();
   const location = useLocation();
   const [timerText, setTimerText] = useState<string>('');
+  const [isLocating, setIsLocating] = useState<boolean>(false);
+  const [geofenceError, setGeofenceError] = useState<string | null>(null);
+  const [showGeofenceModal, setShowGeofenceModal] = useState<boolean>(false);
+  const [modalDetails, setModalDetails] = useState<{ distance: number; radius: number } | null>(null);
+
+  // Initialize default office location in localStorage if not set
+  useEffect(() => {
+    if (!localStorage.getItem('pp_office_lat')) {
+      // Default: Noida / Delhi Office coordinates
+      localStorage.setItem('pp_office_lat', '28.5355');
+      localStorage.setItem('pp_office_lng', '77.3910');
+      localStorage.setItem('pp_office_radius', '200'); // 200 meters
+    }
+  }, []);
+
+  const handleCheckInClick = () => {
+    if (isCheckedIn) {
+      // Checking out - allowed from anywhere!
+      toggleCheckIn();
+      return;
+    }
+
+    // Checking in - verify geolocation
+    if (!navigator.geolocation) {
+      setGeofenceError('Geolocation is not supported by your browser.');
+      setShowGeofenceModal(true);
+      return;
+    }
+
+    setIsLocating(true);
+    setGeofenceError(null);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setIsLocating(false);
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+
+        const officeLat = parseFloat(localStorage.getItem('pp_office_lat') || '28.5355');
+        const officeLng = parseFloat(localStorage.getItem('pp_office_lng') || '77.3910');
+        const radius = parseFloat(localStorage.getItem('pp_office_radius') || '200');
+
+        // Haversine formula
+        const R = 6371e3; // meters
+        const dLat = ((officeLat - userLat) * Math.PI) / 180;
+        const dLng = ((officeLng - userLng) * Math.PI) / 180;
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos((userLat * Math.PI) / 180) *
+            Math.cos((officeLat * Math.PI) / 180) *
+            Math.sin(dLng / 2) *
+            Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // in meters
+
+        if (distance <= radius) {
+          toggleCheckIn();
+        } else {
+          setModalDetails({ distance: Math.round(distance), radius });
+          setGeofenceError(`Out of Range: You are ${Math.round(distance)}m away from the office. Allowed check-in radius is ${radius}m.`);
+          setShowGeofenceModal(true);
+        }
+      },
+      (error) => {
+        setIsLocating(false);
+        let errorMsg = 'Failed to retrieve your location.';
+        if (error.code === error.PERMISSION_DENIED) {
+          errorMsg = 'Location access denied. Please enable location permissions to check in.';
+        }
+        setGeofenceError(errorMsg);
+        setShowGeofenceModal(true);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
+
+  const handleSetMockOfficeLocation = () => {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        localStorage.setItem('pp_office_lat', String(position.coords.latitude));
+        localStorage.setItem('pp_office_lng', String(position.coords.longitude));
+        // Reset and check in immediately
+        setShowGeofenceModal(false);
+        toggleCheckIn();
+      },
+      () => {
+        alert('Could not retrieve current position to set as office.');
+      }
+    );
+  };
 
   useEffect(() => {
     if (!isCheckedIn || !checkInTime) {
@@ -131,13 +222,15 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             )}
 
             <button
-              onClick={toggleCheckIn}
-              className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 ${isCheckedIn
+              onClick={handleCheckInClick}
+              disabled={isLocating}
+              className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 flex items-center gap-1 ${isCheckedIn
                   ? 'bg-success/15 text-success border-success/30 hover:bg-success/25'
                   : 'bg-destructive/15 text-destructive border-destructive/30 hover:bg-destructive/25'
                 }`}
             >
-              {isCheckedIn ? 'Check Out' : 'Check In'}
+              {isLocating && <span className="h-2 w-2 rounded-full border border-primary border-t-transparent animate-spin mr-0.5" />}
+              {isCheckedIn ? 'Check Out' : isLocating ? 'Locating...' : 'Check In'}
             </button>
           </div>
 
@@ -170,6 +263,67 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <footer className="border-t border-border/50 py-5 text-center text-xs text-muted-foreground bg-card">
         <p>© 2026 PeoplePulse HRMS. All rights reserved.</p>
       </footer>
+
+      {/* Geofence Modal */}
+      <AnimatePresence>
+        {showGeofenceModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              className="bg-card border border-border/80 rounded-2xl p-6 shadow-xl max-w-sm w-full space-y-4 relative overflow-hidden"
+            >
+              <div className="flex items-center gap-3 text-destructive">
+                <AlertTriangle className="h-6 w-6 shrink-0 animate-bounce" />
+                <h3 className="font-bold text-foreground text-base">Check-In Denied</h3>
+              </div>
+
+              <div className="text-xs text-muted-foreground leading-relaxed space-y-2">
+                <p>{geofenceError}</p>
+                {modalDetails && (
+                  <div className="p-3 bg-muted/40 rounded-xl border border-border/50 space-y-1">
+                    <div className="flex justify-between">
+                      <span>Office Coordinates:</span>
+                      <span className="font-mono">
+                        {parseFloat(localStorage.getItem('pp_office_lat') || '0').toFixed(4)},{' '}
+                        {parseFloat(localStorage.getItem('pp_office_lng') || '0').toFixed(4)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Office Radius Limit:</span>
+                      <span>{modalDetails.radius}m</span>
+                    </div>
+                    <div className="flex justify-between text-destructive font-semibold">
+                      <span>Your Commute Distance:</span>
+                      <span>{modalDetails.distance}m</span>
+                    </div>
+                  </div>
+                )}
+                <p className="text-[10px] text-muted-foreground italic">
+                  Tip: For local testing, click the button below to set your current position as the office geofence center.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-2 pt-2">
+                <button
+                  onClick={handleSetMockOfficeLocation}
+                  className="w-full text-xs h-9.5 rounded-xl bg-primary text-primary-foreground font-semibold flex items-center justify-center gap-1.5 hover:bg-primary/95 transition-colors shadow cursor-pointer"
+                >
+                  <MapPin className="h-4 w-4" />
+                  Set Current Position as Office
+                </button>
+                <button
+                  onClick={() => setShowGeofenceModal(false)}
+                  className="w-full text-xs h-9.5 rounded-xl border border-border bg-transparent text-foreground hover:bg-muted font-semibold transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

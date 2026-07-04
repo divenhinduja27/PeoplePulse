@@ -3,10 +3,8 @@ import { Button } from '../ui/button';
 import { DatePicker } from '../ui/date-picker';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useUser } from '../../context/UserContext';
 
 export const EmployeeAttendanceView: React.FC = () => {
-  const { currentUser } = useUser();
   const [currentDate, setCurrentDate] = useState<Date>(new Date('2025-10-22T00:00:00'));
 
   const handlePrevMonth = () => {

@@ -9,7 +9,6 @@ import EmployeeProfilePage from './pages/EmployeeProfilePage';
 import AttritionPage from './pages/AttritionPage';
 import AttendancePage from './pages/AttendancePage';
 import TimeOffPage from './pages/TimeOffPage';
-import { Clock } from 'lucide-react';
 
 // Route Guard to redirect unauthenticated users to Login
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -28,20 +27,6 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
   return <>{children}</>;
 };
-
-// Placeholder page for Attendance & Time Off modules
-const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
-  <div className="flex flex-col items-center justify-center p-12 text-center bg-card rounded-2xl border border-border/50 shadow-sm min-h-[50vh] relative overflow-hidden">
-    <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-64 h-64 rounded-full bg-primary/5 blur-3xl -z-10" />
-    <div className="bg-primary/10 p-4 rounded-full text-primary mb-3">
-      <Clock className="h-8 w-8 animate-bounce" />
-    </div>
-    <h3 className="text-lg font-bold text-foreground">{title} Module</h3>
-    <p className="text-xs text-muted-foreground mt-2 max-w-sm">
-      This page is under active development. The underlying routes and state structures are prepared for full integration.
-    </p>
-  </div>
-);
 
 export const AppRouter: React.FC = () => {
   return (
