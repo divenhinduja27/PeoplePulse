@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Model checkpoints & artifacts
+model/attrition_model.pkl
+
+# Databases / local CSVs
+data/hr_attrition.csv
+
+# Environment files
+.env
+.env.local
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
