@@ -89,7 +89,7 @@ export const AdminAttendanceView: React.FC = () => {
     };
   };
 
-  const filteredEmployees = employeesList.filter(emp => 
+  const filteredEmployees = employeesList.filter(emp =>
     emp.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
