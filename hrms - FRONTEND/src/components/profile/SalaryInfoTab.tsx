@@ -39,7 +39,7 @@ export const SalaryInfoTab: React.FC<SalaryInfoTabProps> = ({ employee, isReadOn
 
   return (
     <div className="space-y-6">
-      
+
       {/* Top Level Configuration */}
       <Card className="border border-border/50 shadow-sm rounded-2xl">
         <CardHeader className="pb-3">
@@ -51,7 +51,7 @@ export const SalaryInfoTab: React.FC<SalaryInfoTabProps> = ({ employee, isReadOn
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            
+
             <div className="space-y-1.5">
               <Label htmlFor="monthlyWage">Monthly Wage (₹)</Label>
               <Input

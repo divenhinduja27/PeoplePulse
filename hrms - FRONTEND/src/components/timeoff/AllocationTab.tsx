@@ -31,9 +31,9 @@ export const AllocationTab: React.FC = () => {
               <TableRow key={alloc.id}>
                 <TableCell className="font-medium">
                   <div className="flex items-center gap-3">
-                    <img 
-                      src={alloc.avatarUrl} 
-                      alt={alloc.name} 
+                    <img
+                      src={alloc.avatarUrl}
+                      alt={alloc.name}
                       className="h-8 w-8 rounded-full object-cover border border-border/50"
                     />
                     <span>{alloc.name}</span>

@@ -59,12 +59,12 @@ export const AdminTimeOffView: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [requests, setRequests] = useState<LeaveRequest[]>(mockRequests);
 
-  const filteredRequests = requests.filter(req => 
+  const filteredRequests = requests.filter(req =>
     req.employeeName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleAction = (id: string, action: 'Approved' | 'Rejected') => {
-    setRequests(prev => prev.map(req => 
+    setRequests(prev => prev.map(req =>
       req.id === id ? { ...req, status: action } : req
     ));
   };
@@ -81,12 +81,12 @@ export const AdminTimeOffView: React.FC = () => {
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search className="h-4 w-4 text-muted-foreground" />
           </div>
-          <Input 
-            type="text" 
-            placeholder="Searchbar" 
+          <Input
+            type="text"
+            placeholder="Searchbar"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 rounded-xl bg-card border-border/50" 
+            className="pl-10 rounded-xl bg-card border-border/50"
           />
         </div>
       </div>
@@ -120,9 +120,9 @@ export const AdminTimeOffView: React.FC = () => {
               <TableRow key={req.id}>
                 <TableCell className="font-medium">
                   <div className="flex items-center gap-3">
-                    <img 
-                      src={req.avatarUrl} 
-                      alt={req.employeeName} 
+                    <img
+                      src={req.avatarUrl}
+                      alt={req.employeeName}
                       className="h-8 w-8 rounded-full object-cover border border-border/50"
                     />
                     <span>{req.employeeName}</span>
@@ -133,8 +133,8 @@ export const AdminTimeOffView: React.FC = () => {
                 <TableCell>
                   <span className={cn(
                     "font-semibold",
-                    req.type === 'Paid Time Off' ? "text-primary" : 
-                    req.type === 'Sick Leave' ? "text-blue-500" : "text-orange-500"
+                    req.type === 'Paid Time Off' ? "text-primary" :
+                      req.type === 'Sick Leave' ? "text-blue-500" : "text-orange-500"
                   )}>
                     {req.type}
                   </span>
@@ -142,18 +142,18 @@ export const AdminTimeOffView: React.FC = () => {
                 <TableCell>
                   {req.status === 'Pending' ? (
                     <div className="flex items-center gap-2">
-                      <Button 
-                        size="icon" 
-                        variant="outline" 
+                      <Button
+                        size="icon"
+                        variant="outline"
                         className="h-7 w-7 rounded border-destructive/30 text-destructive hover:bg-destructive hover:text-white"
                         onClick={() => handleAction(req.id, 'Rejected')}
                         title="Reject"
                       >
                         <X className="h-4 w-4" />
                       </Button>
-                      <Button 
-                        size="icon" 
-                        variant="outline" 
+                      <Button
+                        size="icon"
+                        variant="outline"
                         className="h-7 w-7 rounded border-success/30 text-success hover:bg-success hover:text-white"
                         onClick={() => handleAction(req.id, 'Approved')}
                         title="Approve"

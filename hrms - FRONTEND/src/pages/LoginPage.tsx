@@ -3,14 +3,20 @@ import { LoginForm } from '../components/auth/LoginForm';
 
 export const LoginPage: React.FC = () => {
   return (
-    <div className="min-h-[calc(100vh-120px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-background relative overflow-hidden">
+    <div className="min-h-screen w-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#070913] relative overflow-hidden">
       
-      {/* Decorative blobs */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/10 blur-3xl -z-10" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 w-80 h-80 rounded-full bg-accent/10 blur-3xl -z-10" />
+      {/* Absolute Ambient Pulsing Gradients in Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#070913]">
+        <div className="absolute top-[-10%] left-[-10%] w-[55%] h-[55%] rounded-full bg-primary/8 blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] rounded-full bg-accent/8 blur-[120px] animate-pulse" style={{ animationDuration: '10s' }} />
+        <div className="absolute top-[35%] right-[15%] w-[35%] h-[35%] rounded-full bg-success/4 blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
+      </div>
 
-      <LoginForm />
+      <div className="relative z-10 w-full max-w-md">
+        <LoginForm />
+      </div>
     </div>
   );
 };
+
 export default LoginPage;

@@ -1,0 +1,73 @@
+/* cards.css - Premium Dashboard Components */
+.card-premium {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.25s ease-in-out,
+              background-color 0.25s ease-in-out;
+}
+
+/* Card Elevate Lift Effect & Glowing Indigo Outline */
+.card-premium-hover {
+  cursor: pointer;
+}
+
+.card-premium-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.5), 0 0 15px 1px rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.35);
+  background-color: rgba(18, 23, 46, 0.85);
+}
+
+/* Accent Card Highlight Lines */
+.card-accent-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary-hex), var(--color-info-hex));
+}
+
+.card-accent-left::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background-color: var(--color-primary-hex);
+}
+
+/* Layout Parts */
+.card-header-premium {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: var(--spacing-sm);
+}
+
+.card-title-premium {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground);
+}
+
+.card-description-premium {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-xs);
+  color: var(--muted-foreground);
+  margin-top: 0.125rem;
+}

@@ -10,7 +10,7 @@ interface PFContributionCardProps {
   professionalTax: number;
   pfAmount: number;
   totalDeductions: number;
-  
+
   setPfRatePercent: (val: number) => void;
   setProfessionalTax: (val: number) => void;
 }
@@ -26,7 +26,7 @@ export const PFContributionCard: React.FC<PFContributionCardProps> = ({
 }) => {
   return (
     <div className="space-y-6">
-      
+
       {/* PF Card */}
       <Card className="border border-border/50 shadow-sm rounded-2xl">
         <CardHeader className="pb-3">
@@ -50,7 +50,7 @@ export const PFContributionCard: React.FC<PFContributionCardProps> = ({
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4 border-t border-border/40 pt-4 text-xs">
             <div className="bg-muted/30 p-3 rounded-xl border border-border/30">
               <span className="text-muted-foreground block font-medium">Employee Contribution</span>

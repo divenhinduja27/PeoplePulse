@@ -22,7 +22,7 @@ export const AnnualCalendarGrid: React.FC<AnnualCalendarGridProps> = ({ year, ev
   const getEventClass = (dateStr: string) => {
     const event = events.find(e => e.date === dateStr);
     if (!event) return '';
-    switch(event.type) {
+    switch (event.type) {
       case 'approved': return 'bg-success text-success-foreground font-bold shadow-md';
       case 'pending': return 'bg-orange-500 text-white font-bold shadow-md';
       case 'holiday': return 'bg-destructive/10 text-destructive font-bold';
@@ -38,13 +38,13 @@ export const AnnualCalendarGrid: React.FC<AnnualCalendarGridProps> = ({ year, ev
           {months.map((month, monthIndex) => {
             const firstDay = new Date(year, monthIndex, 1).getDay();
             const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
-            
+
             return (
               <div key={month} className="flex flex-col">
                 <h4 className="font-bold text-sm mb-3">
                   {month} {year}
                 </h4>
-                
+
                 {/* Days of Week Header */}
                 <div className="grid grid-cols-7 gap-1 mb-1">
                   {daysOfWeek.map((d, i) => (
@@ -66,8 +66,8 @@ export const AnnualCalendarGrid: React.FC<AnnualCalendarGridProps> = ({ year, ev
                     const isToday = new Date().toISOString().split('T')[0] === dateStr;
 
                     return (
-                      <div 
-                        key={day} 
+                      <div
+                        key={day}
                         className={cn(
                           "h-6 w-full flex items-center justify-center text-[11px] rounded-md",
                           eventClass ? eventClass : isToday ? "border border-primary font-bold text-primary" : "text-foreground"
@@ -87,7 +87,7 @@ export const AnnualCalendarGrid: React.FC<AnnualCalendarGridProps> = ({ year, ev
         <div className="w-full xl:w-64 border-l border-border/50 pl-0 xl:pl-8 pt-8 xl:pt-0 shrink-0">
           <div className="sticky top-4">
             <h4 className="font-bold text-sm mb-4">Legend</h4>
-            
+
             <div className="space-y-3 mb-8">
               <div className="flex items-center gap-2">
                 <div className="h-4 w-4 rounded-md bg-success shadow-sm" />

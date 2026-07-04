@@ -1,0 +1,69 @@
+/* theme.css - Light Mode (Default) and Dark Mode Mappings */
+:root {
+  --background: #F8FAFC;
+  --foreground: #111827;
+  --card: #FFFFFF;
+  --card-foreground: #111827;
+  --popover: #FFFFFF;
+  --popover-foreground: #111827;
+  --primary: #4F46E5;                  /* Indigo Light */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #111827;
+  --muted: #F1F5F9;
+  --muted-foreground: #6B7280;
+  --accent: #3B82F6;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --border: #E2E8F0;
+  --input: #F1F5F9;
+  --ring: #4F46E5;
+
+  /* Status specific mappings */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --info: #3B82F6;
+  --danger: #EF4444;
+
+  --radius: var(--radius-card);
+
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #4F46E5;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F1F5F9;
+  --sidebar-accent-foreground: #111827;
+  --sidebar-border: #E2E8F0;
+  --sidebar-ring: #4F46E5;
+}
+
+.dark {
+  --background: var(--color-background-hex);
+  --foreground: var(--color-text-primary-hex);
+  --card: var(--color-card-hex);
+  --card-foreground: var(--color-text-primary-hex);
+  --popover: rgba(13, 17, 33, 0.92);
+  --popover-foreground: var(--color-text-primary-hex);
+  --primary: var(--color-primary-hex);         /* Indigo Dark */
+  --primary-foreground: #FFFFFF;
+  --secondary: rgba(24, 30, 52, 0.6);
+  --secondary-foreground: var(--color-text-primary-hex);
+  --muted: rgba(24, 30, 52, 0.6);
+  --muted-foreground: var(--color-text-secondary-hex);
+  --accent: var(--color-info-hex);
+  --accent-foreground: #FFFFFF;
+  --destructive: var(--color-danger-hex);
+  --border: var(--color-border-hex);
+  --input: rgba(255, 255, 255, 0.05);
+  --ring: var(--color-primary-hex);
+
+  --sidebar: rgba(11, 14, 28, 0.85);
+  --sidebar-foreground: var(--color-text-primary-hex);
+  --sidebar-primary: var(--color-primary-hex);
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: rgba(24, 30, 52, 0.6);
+  --sidebar-accent-foreground: var(--color-text-primary-hex);
+  --sidebar-border: var(--color-border-hex);
+  --sidebar-ring: var(--color-primary-hex);
+}
+

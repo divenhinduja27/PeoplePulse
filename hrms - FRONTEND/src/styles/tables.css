@@ -1,0 +1,78 @@
+/* tables.css - Modern Enterprise Tables */
+.table-modern-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.table-modern {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--font-family-sans);
+}
+
+.table-modern thead {
+  background-color: rgba(241, 245, 249, 0.6);
+  border-bottom: 1px solid var(--border);
+}
+
+.dark .table-modern thead {
+  background-color: rgba(31, 41, 55, 0.4);
+}
+
+.table-modern th {
+  padding: 0.75rem 1rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table-modern td {
+  padding: 0.875rem 1rem;
+  font-size: var(--font-size-sm);
+  color: var(--foreground);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.15s ease-in-out;
+}
+
+.table-modern tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Row states */
+.table-modern tbody tr {
+  transition: all 0.2s ease;
+}
+
+.table-modern tbody tr:hover td {
+  background-color: rgba(241, 245, 249, 0.8);
+}
+
+.dark .table-modern tbody tr:hover td {
+  background-color: rgba(31, 41, 55, 0.5);
+}
+
+/* Alternating Row Color Modifier */
+.table-striped tbody tr:nth-child(even) td {
+  background-color: rgba(248, 250, 252, 0.5);
+}
+
+.dark .table-striped tbody tr:nth-child(even) td {
+  background-color: rgba(17, 24, 39, 0.3);
+}
+
+/* Custom Table Actions wrapper */
+.table-actions-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xxs);
+}

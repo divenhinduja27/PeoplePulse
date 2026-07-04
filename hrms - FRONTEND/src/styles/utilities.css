@@ -1,0 +1,125 @@
+/* utilities.css - Badges, Alerts, Empty States, & Helpers */
+
+/* Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xxs);
+  padding: 0.125rem 0.5rem;
+  font-family: var(--font-family-sans);
+  font-size: 0.6875rem; /* ~11px */
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-badge);
+  border: 1px solid transparent;
+  line-height: 1.25;
+}
+
+.badge-primary {
+  background-color: rgba(79, 70, 229, 0.1);
+  color: var(--color-primary-hex);
+  border-color: rgba(79, 70, 229, 0.2);
+}
+
+.badge-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--color-success-hex);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.badge-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--color-warning-hex);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.badge-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--color-danger-hex);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.badge-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--color-info-hex);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Alert Styles */
+.alert {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-card);
+  border: 1px solid transparent;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.alert-success {
+  background-color: rgba(16, 185, 129, 0.05);
+  color: var(--color-success-hex);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.alert-error {
+  background-color: rgba(239, 68, 68, 0.05);
+  color: var(--color-danger-hex);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.alert-warning {
+  background-color: rgba(245, 158, 11, 0.05);
+  color: var(--color-warning-hex);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.alert-info {
+  background-color: rgba(59, 130, 246, 0.05);
+  color: var(--color-info-hex);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Empty State Card Components */
+.empty-state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  background-color: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.empty-state-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  border-radius: 9999px;
+  background-color: var(--secondary);
+  color: var(--muted-foreground);
+  margin-bottom: var(--spacing-md);
+}
+
+.empty-state-title {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground);
+  margin-bottom: var(--spacing-xxs);
+}
+
+.empty-state-text {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-xs);
+  color: var(--muted-foreground);
+  max-width: 20rem;
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+}

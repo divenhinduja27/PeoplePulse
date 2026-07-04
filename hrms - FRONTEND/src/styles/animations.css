@@ -1,0 +1,80 @@
+/* animations.css - Micro-Interactions & Shimmers */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.4);
+  }
+}
+
+/* Animations Classes */
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Skeleton Loading Shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, 
+    rgba(229, 231, 235, 0.5) 25%, 
+    rgba(209, 213, 219, 0.7) 50%, 
+    rgba(229, 231, 235, 0.5) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.dark .skeleton-shimmer {
+  background: linear-gradient(90deg, 
+    rgba(31, 41, 55, 0.5) 25%, 
+    rgba(55, 65, 81, 0.7) 50%, 
+    rgba(31, 41, 55, 0.5) 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* Glowing Presence Indicators */
+.pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Easing helpers */
+.transition-premium {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -14,7 +14,7 @@ export const EmployeeGrid: React.FC<EmployeeGridProps> = ({ employees }) => {
 
   return (
     <div className="space-y-6">
-      
+
       {/* Header and Live Search Filter */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-card p-4 rounded-2xl border border-border/50 shadow-sm">
         <div className="relative w-full sm:max-w-md">
@@ -41,12 +41,12 @@ export const EmployeeGrid: React.FC<EmployeeGridProps> = ({ employees }) => {
         </div>
       ) : (
         /* Empty State */
-        <div className="flex flex-col items-center justify-center p-12 text-center bg-card rounded-2xl border border-border/50 shadow-inner">
-          <div className="bg-destructive/10 p-4 rounded-full text-destructive mb-3">
-            <UserX className="h-8 w-8" />
+        <div className="empty-state-card">
+          <div className="empty-state-icon-wrap bg-destructive/10 text-destructive border border-destructive/20 shadow-inner">
+            <UserX className="h-6 w-6" />
           </div>
-          <h3 className="text-base font-bold text-foreground">No employees found</h3>
-          <p className="text-xs text-muted-foreground mt-1 max-w-xs">
+          <h3 className="empty-state-title">No employees found</h3>
+          <p className="empty-state-text">
             We couldn't find any employees matching "{searchQuery}". Double-check your spelling or query ID.
           </p>
         </div>

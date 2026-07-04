@@ -32,7 +32,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee }) => {
       onClick={handleCardClick}
       className="cursor-pointer h-full"
     >
-      <Card className="relative h-full border border-border/60 hover:border-primary/30 bg-card rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between group">
+      <Card className="card-premium-hover h-full flex flex-col justify-between group p-5">
 
         {/* Status Dot in top right */}
         <div className="absolute top-4 right-4">
@@ -40,11 +40,13 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee }) => {
         </div>
 
         <div className="flex flex-col items-center text-center mt-3 flex-grow">
-          {/* Avatar */}
-          <Avatar className="h-16 w-16 border-2 border-border shadow-sm group-hover:border-primary/20 transition-colors duration-300">
-            <AvatarImage src={employee.avatarUrl} alt={employee.name} />
-            <AvatarFallback>{initials}</AvatarFallback>
-          </Avatar>
+          {/* Avatar with dynamic glowing circular ring wrapper */}
+          <div className="relative p-[2px] rounded-full bg-gradient-to-tr from-border/50 to-border/80 group-hover:from-primary group-hover:to-accent transition-all duration-300 shadow-md">
+            <Avatar className="h-16 w-16 border-2 border-card">
+              <AvatarImage src={employee.avatarUrl} alt={employee.name} />
+              <AvatarFallback>{initials}</AvatarFallback>
+            </Avatar>
+          </div>
 
           {/* Name & ID */}
           <h3 className="font-bold text-base text-foreground mt-3 group-hover:text-primary transition-colors">
