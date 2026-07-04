@@ -100,14 +100,6 @@ export const EmployeeAttendanceView: React.FC = () => {
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* Table Header Details */}
-      <div className="bg-card border border-border/40 rounded-2xl p-4 flex items-center justify-between shadow-xs">
-        <h3 className="font-bold text-sm text-foreground">
-          Logs for {currentDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
-        </h3>
-        <span className="badge badge-primary">Monthly View</span>
-=======
       {/* Table */}
       <div className="bg-card rounded-2xl border border-border/50 overflow-hidden shadow-sm">
         <div className="p-4 border-b border-border/50 bg-muted/10">
@@ -137,32 +129,7 @@ export const EmployeeAttendanceView: React.FC = () => {
             ))}
           </TableBody>
         </Table>
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
       </div>
-
-      {/* Table */}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Check In</TableHead>
-            <TableHead>Check Out</TableHead>
-            <TableHead>Work Hours</TableHead>
-            <TableHead>Extra hours</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {attendanceHistory.map((record, idx) => (
-            <TableRow key={idx}>
-              <TableCell className="font-medium">{record.date}</TableCell>
-              <TableCell>{record.checkIn}</TableCell>
-              <TableCell>{record.checkOut}</TableCell>
-              <TableCell>{record.workHours}</TableCell>
-              <TableCell>{record.extraHours}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
     </div>
   );
 };

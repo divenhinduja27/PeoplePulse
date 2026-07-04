@@ -2,12 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { AvatarMenu } from './AvatarMenu';
-<<<<<<< HEAD
 import logoImg from '../../assets/logo.png';
-import { Sparkles, Calendar, Clock, Users, BrainCircuit, ChevronLeft, ChevronRight, Menu, X, Bell, Sun, Moon } from 'lucide-react';
-=======
-import { Sparkles, Calendar, Clock, Users, BrainCircuit, AlertTriangle, MapPin } from 'lucide-react';
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
+import { Sparkles, Calendar, Clock, Users, BrainCircuit, ChevronLeft, ChevronRight, Menu, X, Bell, Sun, Moon, AlertTriangle, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AppShellProps {
@@ -18,7 +14,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const { currentUser, isCheckedIn, checkInTime, toggleCheckIn } = useUser();
   const location = useLocation();
   const [timerText, setTimerText] = useState<string>('');
-<<<<<<< HEAD
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
 
@@ -111,7 +106,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
   const toggleNotification = (id: string) => {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: !n.read } : n));
-=======
+  };
+
+  // Geofencing States
   const [isLocating, setIsLocating] = useState<boolean>(false);
   const [geofenceError, setGeofenceError] = useState<string | null>(null);
   const [showGeofenceModal, setShowGeofenceModal] = useState<boolean>(false);
@@ -202,7 +199,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         alert('Could not retrieve current position to set as office.');
       }
     );
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
   };
 
   useEffect(() => {
@@ -306,7 +302,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           </Link>
         </div>
 
-<<<<<<< HEAD
         {/* Sidebar Navigation Items */}
         <nav className="flex-1 py-6 px-3.5 space-y-1.5 overflow-y-auto">
           {menuItems.map((item) => {
@@ -364,96 +359,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
               <div className="h-3 w-3 rounded-full bg-primary animate-pulse border border-background shadow-sm" />
             </div>
           )}
-=======
-        {/* Tab Navigation Menu */}
-        <nav className="flex items-center bg-muted/60 p-1 rounded-xl border border-border/50">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
-                ? 'bg-card text-foreground shadow-sm'
-                : 'text-muted-foreground hover:text-foreground'
-              }`
-            }
-          >
-            <Users className="h-4 w-4" />
-            <span>Employees</span>
-          </NavLink>
-          <NavLink
-            to="/attendance"
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
-                ? 'bg-card text-foreground shadow-sm'
-                : 'text-muted-foreground hover:text-foreground'
-              }`
-            }
-          >
-            <Clock className="h-4 w-4" />
-            <span>Attendance</span>
-          </NavLink>
-          <NavLink
-            to="/timeoff"
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
-                ? 'bg-card text-foreground shadow-sm'
-                : 'text-muted-foreground hover:text-foreground'
-              }`
-            }
-          >
-            <Calendar className="h-4 w-4" />
-            <span>Time Off</span>
-          </NavLink>
-          {currentUser?.role === 'admin' && (
-            <NavLink
-              to="/attrition"
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
-                  ? 'bg-card text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
-                }`
-              }
-            >
-              <BrainCircuit className="h-4 w-4" />
-              <span>AI Attrition</span>
-            </NavLink>
-          )}
-        </nav>
-
-        {/* User Info and Dropdown */}
-        <div className="flex items-center gap-3">
-
-          {/* Check In / Check Out System indicator dot + button */}
-          <div className="flex items-center gap-2.5 px-3 py-1 bg-muted/60 rounded-xl border border-border/40 shadow-inner mr-1.5 select-none transition-all">
-            {/* Red / Green dot indicating check-in status */}
-            <span className={`h-2.5 w-2.5 rounded-full ring-4 transition-all duration-300 ${isCheckedIn ? 'bg-success ring-success/20 animate-pulse' : 'bg-destructive ring-destructive/20'}`} />
-
-            {isCheckedIn && timerText && (
-              <span className="text-[10px] font-bold font-mono text-muted-foreground mr-1">
-                {timerText}
-              </span>
-            )}
-
-            <button
-              onClick={handleCheckInClick}
-              disabled={isLocating}
-              className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 flex items-center gap-1 ${isCheckedIn
-                  ? 'bg-success/15 text-success border-success/30 hover:bg-success/25'
-                  : 'bg-destructive/15 text-destructive border-destructive/30 hover:bg-destructive/25'
-                }`}
-            >
-              {isLocating && <span className="h-2 w-2 rounded-full border border-primary border-t-transparent animate-spin mr-0.5" />}
-              {isCheckedIn ? 'Check Out' : isLocating ? 'Locating...' : 'Check In'}
-            </button>
-          </div>
-
-          <div className="hidden sm:flex flex-col text-right">
-            <span className="text-xs font-bold leading-tight">{currentUser.name}</span>
-            <span className="text-[10px] bg-primary/10 text-primary border border-primary/20 rounded px-1.5 py-0.5 mt-0.5 self-end capitalize font-semibold tracking-wider">
-              {currentUser.role} View
-            </span>
-          </div>
-          <AvatarMenu />
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
         </div>
 
         {/* Sidebar Toggle Button (Floating) */}
@@ -580,14 +485,16 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
               )}
 
               <button
-                onClick={toggleCheckIn}
-                className={`text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 ${
+                onClick={handleCheckInClick}
+                disabled={isLocating}
+                className={`text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 flex items-center gap-1 ${
                   isCheckedIn
                     ? 'bg-success/10 text-success border-success/20 hover:bg-success/20'
                     : 'bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/20'
                 }`}
               >
-                {isCheckedIn ? 'Check Out' : 'Check In'}
+                {isLocating && <span className="h-2 w-2 rounded-full border border-primary border-t-transparent animate-spin mr-0.5" />}
+                {isCheckedIn ? 'Check Out' : isLocating ? 'Locating...' : 'Check In'}
               </button>
             </div>
 
@@ -715,12 +622,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         </footer>
       </div>
 
-<<<<<<< HEAD
-=======
-      <footer className="border-t border-border/50 py-5 text-center text-xs text-muted-foreground bg-card">
-        <p>© 2026 PeoplePulse HRMS. All rights reserved.</p>
-      </footer>
-
       {/* Geofence Modal */}
       <AnimatePresence>
         {showGeofenceModal && (
@@ -781,7 +682,6 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           </div>
         )}
       </AnimatePresence>
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
     </div>
   );
 };
