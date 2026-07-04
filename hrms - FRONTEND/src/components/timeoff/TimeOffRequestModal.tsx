@@ -8,7 +8,7 @@ import { UploadCloud } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 
 interface TimeOffRequestModalProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
 }
 
 export const TimeOffRequestModal: React.FC<TimeOffRequestModalProps> = ({ children }) => {
@@ -60,9 +60,7 @@ export const TimeOffRequestModal: React.FC<TimeOffRequestModalProps> = ({ childr
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+      <DialogTrigger render={children as React.ReactElement} />
       <DialogContent className="max-w-md rounded-2xl">
         <DialogHeader>
           <DialogTitle>Time off Type Request</DialogTitle>
@@ -133,11 +131,13 @@ export const TimeOffRequestModal: React.FC<TimeOffRequestModalProps> = ({ childr
             <Button type="submit" className="rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold w-24">
               Submit
             </Button>
-            <DialogClose asChild>
-              <Button type="button" variant="outline" className="rounded-xl bg-secondary hover:bg-secondary/80 font-bold w-24">
-                Discard
-              </Button>
-            </DialogClose>
+            <DialogClose
+              render={
+                <Button type="button" variant="outline" className="rounded-xl bg-secondary hover:bg-secondary/80 font-bold w-24">
+                  Discard
+                </Button>
+              }
+            />
           </DialogFooter>
         </form>
       </DialogContent>
