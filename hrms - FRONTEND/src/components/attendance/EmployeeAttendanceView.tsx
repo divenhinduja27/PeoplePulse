@@ -3,9 +3,11 @@ import { Button } from '../ui/button';
 import { DatePicker } from '../ui/date-picker';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useUser } from '../../context/UserContext';
 
 export const EmployeeAttendanceView: React.FC = () => {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date('2025-10-22T00:00:00'));
+  const { currentUser } = useUser();
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const handlePrevMonth = () => {
     const newDate = new Date(currentDate);
@@ -19,14 +21,24 @@ export const EmployeeAttendanceView: React.FC = () => {
     setCurrentDate(newDate);
   };
 
-  // Mock attendance history for the employee
-  const attendanceHistory = [
-    { date: '28/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
-    { date: '29/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
-    { date: '30/10/2025', checkIn: '09:45', checkOut: '18:45', workHours: '09:00', extraHours: '00:00' },
-    { date: '31/10/2025', checkIn: '10:15', checkOut: '19:30', workHours: '09:15', extraHours: '01:15' },
-    { date: '01/11/2025', checkIn: '10:00', checkOut: '18:00', workHours: '08:00', extraHours: '00:00' },
-  ];
+  if (!currentUser) return null;
+
+  // Fetch attendance history for the logged-in employee from localStorage
+  const attendanceHistory = (() => {
+    const key = `pp_attendance_${currentUser.id}`;
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : [
+      { date: '28/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
+      { date: '29/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
+      { date: '30/10/2025', checkIn: '09:45', checkOut: '18:45', workHours: '09:00', extraHours: '00:00' },
+      { date: '31/10/2025', checkIn: '10:15', checkOut: '19:30', workHours: '09:15', extraHours: '01:15' },
+      { date: '01/11/2025', checkIn: '10:00', checkOut: '18:00', workHours: '08:00', extraHours: '00:00' },
+    ];
+  })();
+
+  const presentDays = attendanceHistory.length;
+  const leavesCount = 2;
+  const totalWorkingDays = presentDays + leavesCount;
 
   return (
     <div className="space-y-6">
@@ -46,7 +58,7 @@ export const EmployeeAttendanceView: React.FC = () => {
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
-          
+
           <div className="w-auto">
             <DatePicker date={currentDate} onChange={setCurrentDate} />
           </div>
@@ -56,15 +68,15 @@ export const EmployeeAttendanceView: React.FC = () => {
         <div className="flex items-center gap-3 flex-wrap">
           <div className="bg-card border border-border/50 rounded-xl px-4 py-2 flex flex-col justify-center items-center shadow-sm">
             <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Count of days present</span>
-            <span className="text-lg font-bold">22</span>
+            <span className="text-lg font-bold">{presentDays}</span>
           </div>
           <div className="bg-card border border-border/50 rounded-xl px-4 py-2 flex flex-col justify-center items-center shadow-sm">
             <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Leaves count</span>
-            <span className="text-lg font-bold">2</span>
+            <span className="text-lg font-bold">{leavesCount}</span>
           </div>
           <div className="bg-card border border-border/50 rounded-xl px-4 py-2 flex flex-col justify-center items-center shadow-sm">
             <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Total working days</span>
-            <span className="text-lg font-bold">24</span>
+            <span className="text-lg font-bold">{totalWorkingDays}</span>
           </div>
         </div>
       </div>
@@ -87,7 +99,7 @@ export const EmployeeAttendanceView: React.FC = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {attendanceHistory.map((record, idx) => (
+            {attendanceHistory.map((record: any, idx: number) => (
               <TableRow key={idx}>
                 <TableCell className="font-medium">{record.date}</TableCell>
                 <TableCell>{record.checkIn}</TableCell>

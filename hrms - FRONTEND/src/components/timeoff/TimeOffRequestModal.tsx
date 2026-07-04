@@ -14,7 +14,7 @@ interface TimeOffRequestModalProps {
 export const TimeOffRequestModal: React.FC<TimeOffRequestModalProps> = ({ children }) => {
   const { currentUser } = useUser();
   const [isOpen, setIsOpen] = useState(false);
-  
+
   // Form State
   const [leaveType, setLeaveType] = useState('Paid Time Off');
   const [startDate, setStartDate] = useState('');
@@ -42,7 +42,7 @@ export const TimeOffRequestModal: React.FC<TimeOffRequestModalProps> = ({ childr
     e.preventDefault();
     // Normally would send to API here
     setIsOpen(false);
-    
+
     // Reset form
     setStartDate('');
     setEndDate('');
@@ -60,7 +60,7 @@ export const TimeOffRequestModal: React.FC<TimeOffRequestModalProps> = ({ childr
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogTrigger render={children} />
+      <DialogTrigger render={children as React.ReactElement} />
       <DialogContent className="max-w-md rounded-2xl">
         <DialogHeader>
           <DialogTitle>Time off Type Request</DialogTitle>
@@ -86,16 +86,16 @@ export const TimeOffRequestModal: React.FC<TimeOffRequestModalProps> = ({ childr
           <div className="grid grid-cols-[120px_1fr] items-center gap-4">
             <Label className="text-right text-muted-foreground font-semibold">Validity Period</Label>
             <div className="flex items-center gap-2">
-              <Input 
-                type="date" 
+              <Input
+                type="date"
                 className="h-9 rounded-xl"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 required
               />
               <span className="text-muted-foreground text-sm font-semibold">To</span>
-              <Input 
-                type="date" 
+              <Input
+                type="date"
                 className="h-9 rounded-xl"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}

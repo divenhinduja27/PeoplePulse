@@ -308,10 +308,10 @@ export const AttritionPage: React.FC = () => {
                   </div>
                   <span
                     className={`text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-sm ${result.risk_category === 'HIGH'
-                        ? 'bg-destructive/15 text-destructive border border-destructive/30'
-                        : result.risk_category === 'MEDIUM'
-                          ? 'bg-warning/15 text-warning border border-warning/30'
-                          : 'bg-success/15 text-success border border-success/30'
+                      ? 'bg-destructive/15 text-destructive border border-destructive/30'
+                      : result.risk_category === 'MEDIUM'
+                        ? 'bg-warning/15 text-warning border border-warning/30'
+                        : 'bg-success/15 text-success border border-success/30'
                       }`}
                   >
                     {result.risk_category} RISK
@@ -329,10 +329,10 @@ export const AttritionPage: React.FC = () => {
                     <div className="h-3 rounded-full bg-muted border border-border/40 overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${result.risk_category === 'HIGH'
-                            ? 'bg-destructive'
-                            : result.risk_category === 'MEDIUM'
-                              ? 'bg-warning'
-                              : 'bg-success'
+                          ? 'bg-destructive'
+                          : result.risk_category === 'MEDIUM'
+                            ? 'bg-warning'
+                            : 'bg-success'
                           }`}
                         style={{ width: `${result.risk_score}%` }}
                       />

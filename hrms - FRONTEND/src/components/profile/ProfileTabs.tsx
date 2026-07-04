@@ -56,7 +56,7 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({
         </TabsContent>
         {userRole === 'admin' && (
           <TabsContent value="salary">
-            <SalaryInfoTab employee={employee} isReadOnly={isReadOnly} onSave={onSave} />
+            <SalaryInfoTab employee={employee} isReadOnly={userRole !== 'admin'} onSave={onSave} />
           </TabsContent>
         )}
         <TabsContent value="security">
