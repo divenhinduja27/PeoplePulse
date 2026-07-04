@@ -6,6 +6,7 @@ import { ResumeTab } from './ResumeTab';
 import { PrivateInfoTab } from './PrivateInfoTab';
 import { SalaryInfoTab } from './SalaryInfoTab';
 import { SecurityTab } from './SecurityTab';
+import { useUser } from '../../context/UserContext';
 
 interface ProfileTabsProps {
   employee: Employee;
@@ -20,6 +21,9 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({
   userRole,
   onSave,
 }) => {
+  const { currentUser } = useUser();
+  const canViewSalary = userRole === 'admin' || currentUser?.id === employee.id;
+
   return (
     <Tabs defaultValue="profile" className="w-full">
       <div className="w-full overflow-x-auto pb-2 mb-4">
@@ -33,7 +37,7 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({
           <TabsTrigger value="private" className="rounded-lg px-4 py-1.5 text-xs md:text-sm">
             Private Info
           </TabsTrigger>
-          {userRole === 'admin' && (
+          {canViewSalary && (
             <TabsTrigger value="salary" className="rounded-lg px-4 py-1.5 text-xs md:text-sm">
               Salary Info
             </TabsTrigger>
@@ -54,7 +58,7 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({
         <TabsContent value="private">
           <PrivateInfoTab employee={employee} isReadOnly={isReadOnly} onSave={onSave} />
         </TabsContent>
-        {userRole === 'admin' && (
+        {canViewSalary && (
           <TabsContent value="salary">
             <SalaryInfoTab employee={employee} isReadOnly={userRole !== 'admin'} onSave={onSave} />
           </TabsContent>

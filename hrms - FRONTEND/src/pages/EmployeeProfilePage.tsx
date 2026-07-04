@@ -9,6 +9,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
 import { StatusDot } from '../components/shared/StatusDot';
 import { ArrowLeft, ShieldAlert, UserCheck } from 'lucide-react';
 
+const getRelativeDateStr = (daysOffset: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + daysOffset);
+  const pad = (num: number) => String(num).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
+
 export const EmployeeProfilePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -39,7 +46,7 @@ export const EmployeeProfilePage: React.FC = () => {
     // If not found and it's own profile, create the default admin profile for Divya Hinduja
     if (!found && isOwnProfile && currentUser) {
       found = {
-        id: currentUser.id || "PPDH20220001",
+        id: currentUser.id || "PPDH20260001",
         name: currentUser.name || "Divya Hinduja",
         email: currentUser.email || "divya@peoplepulse.com",
         phone: "+91 99999 88888",
@@ -67,13 +74,13 @@ export const EmployeeProfilePage: React.FC = () => {
           personalEmail: "divya.hinduja.personal@gmail.com",
           gender: "Female",
           maritalStatus: "Married",
-          dateOfJoining: "2022-06-01",
+          dateOfJoining: getRelativeDateStr(-28),
           accountNumber: "912010087654321",
           bankName: "HDFC Bank",
           ifscCode: "HDFC0000004",
           panNo: "DIPHA9876C",
           uanId: "100999888777",
-          empCode: "DIR2022001"
+          empCode: "DIR2026001"
         },
         role: "admin",
         salary: {

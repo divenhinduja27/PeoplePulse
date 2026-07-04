@@ -86,7 +86,8 @@ export const DashboardPage: React.FC = () => {
     }
 
     // 1. Calculate next serial number for this year
-    const joinYear = dateOfJoining ? new Date(dateOfJoining).getFullYear() : 2026;
+    const currentYear = new Date().getFullYear();
+    const joinYear = dateOfJoining ? new Date(dateOfJoining).getFullYear() : currentYear;
     const employeesInYear = employees.filter((emp) => emp.id.includes(String(joinYear)));
     const nextSerial = employeesInYear.length + 1;
 
@@ -122,7 +123,11 @@ export const DashboardPage: React.FC = () => {
         personalEmail: email.trim(),
         gender: 'Male',
         maritalStatus: 'Single',
-        dateOfJoining: dateOfJoining || '2026-07-04',
+        dateOfJoining: dateOfJoining || (() => {
+          const d = new Date();
+          const pad = (num: number) => String(num).padStart(2, '0');
+          return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        })(),
         accountNumber: '9120100' + Math.floor(100000 + Math.random() * 900000),
         bankName: 'HDFC Bank',
         ifscCode: 'HDFC0000004',
@@ -366,7 +371,7 @@ export const DashboardPage: React.FC = () => {
                       <Label htmlFor="newEmpCode">Emp Code Override</Label>
                       <Input
                         id="newEmpCode"
-                        placeholder="EMP2026007"
+                        placeholder={`EMP${new Date().getFullYear()}007`}
                         value={empCode}
                         onChange={(e) => setEmpCode(e.target.value)}
                         className="rounded-xl h-9"

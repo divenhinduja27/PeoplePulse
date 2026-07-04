@@ -4,21 +4,23 @@ import { Plus } from 'lucide-react';
 import { AnnualCalendarGrid } from './AnnualCalendarGrid';
 import { TimeOffRequestModal } from './TimeOffRequestModal';
 
+const getLocalDateOffsetStr = (daysOffset: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + daysOffset);
+  const pad = (num: number) => String(num).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
+
+const currentYear = new Date().getFullYear();
+
 const mockLeaveEvents = [
   // Approved
-  { date: '2026-05-13', type: 'approved' as const },
-  { date: '2026-05-14', type: 'approved' as const },
+  { date: getLocalDateOffsetStr(-19), type: 'approved' as const },
+  { date: getLocalDateOffsetStr(-18), type: 'approved' as const },
   // Pending
-  { date: '2026-07-08', type: 'pending' as const },
-  // Holidays (matching the legend)
-  { date: '2026-01-14', type: 'holiday' as const },
-  { date: '2026-01-26', type: 'holiday' as const },
-  { date: '2026-03-04', type: 'holiday' as const },
-  { date: '2026-08-15', type: 'holiday' as const },
-  { date: '2026-08-19', type: 'holiday' as const },
-  { date: '2026-10-02', type: 'holiday' as const },
-  { date: '2026-11-08', type: 'holiday' as const },
-  { date: '2026-11-10', type: 'holiday' as const },
+  { date: getLocalDateOffsetStr(-2), type: 'pending' as const },
+  // Holidays (matching the legend within the last 30 days)
+  { date: getLocalDateOffsetStr(-24), type: 'holiday' as const },
 ];
 
 export const EmployeeTimeOffView: React.FC = () => {
@@ -47,7 +49,7 @@ export const EmployeeTimeOffView: React.FC = () => {
       </div>
 
       {/* Annual Calendar View */}
-      <AnnualCalendarGrid year={2026} events={mockLeaveEvents} />
+      <AnnualCalendarGrid year={currentYear} events={mockLeaveEvents} />
     </div>
   );
 };

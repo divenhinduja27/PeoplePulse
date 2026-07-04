@@ -27,12 +27,32 @@ export const EmployeeAttendanceView: React.FC = () => {
   const attendanceHistory = (() => {
     const key = `pp_attendance_${currentUser.id}`;
     const saved = localStorage.getItem(key);
+    const getMockAttendanceDates = () => {
+      const today = new Date();
+      const dayOfWeek = today.getDay();
+      const monday = new Date(today);
+      const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+      monday.setDate(diff);
+
+      const pad = (num: number) => String(num).padStart(2, '0');
+      const formatDate = (d: Date) => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+
+      const dates = [];
+      for (let i = 0; i < 5; i++) {
+        const day = new Date(monday);
+        day.setDate(monday.getDate() + i);
+        dates.push(formatDate(day));
+      }
+      return dates;
+    };
+
+    const mockDates = getMockAttendanceDates();
     const list = saved ? JSON.parse(saved) : [
-      { date: '28/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
-      { date: '29/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
-      { date: '30/10/2025', checkIn: '09:45', checkOut: '18:45', workHours: '09:00', extraHours: '00:00' },
-      { date: '31/10/2025', checkIn: '10:15', checkOut: '19:30', workHours: '09:15', extraHours: '01:15' },
-      { date: '01/11/2025', checkIn: '10:00', checkOut: '18:00', workHours: '08:00', extraHours: '00:00' },
+      { date: mockDates[0], checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
+      { date: mockDates[1], checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
+      { date: mockDates[2], checkIn: '09:45', checkOut: '18:45', workHours: '09:00', extraHours: '00:00' },
+      { date: mockDates[3], checkIn: '10:15', checkOut: '19:30', workHours: '09:15', extraHours: '01:15' },
+      { date: mockDates[4], checkIn: '10:00', checkOut: '18:00', workHours: '08:00', extraHours: '00:00' },
     ];
 
     if (isCheckedIn && checkInTime) {
@@ -100,19 +120,11 @@ export const EmployeeAttendanceView: React.FC = () => {
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* Table Header Details */}
-      <div className="bg-card border border-border/40 rounded-2xl p-4 flex items-center justify-between shadow-xs">
-        <h3 className="font-bold text-sm text-foreground">
-          Logs for {currentDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
-        </h3>
-        <span className="badge badge-primary">Monthly View</span>
-=======
       {/* Table */}
       <div className="bg-card rounded-2xl border border-border/50 overflow-hidden shadow-sm">
         <div className="p-4 border-b border-border/50 bg-muted/10">
           <h3 className="font-semibold text-sm">
-            {currentDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
+            Logs for {currentDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
           </h3>
         </div>
         <Table>
@@ -137,32 +149,7 @@ export const EmployeeAttendanceView: React.FC = () => {
             ))}
           </TableBody>
         </Table>
->>>>>>> 1d0caab9a996d5c935386e126ed9c1794c22eacd
       </div>
-
-      {/* Table */}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Check In</TableHead>
-            <TableHead>Check Out</TableHead>
-            <TableHead>Work Hours</TableHead>
-            <TableHead>Extra hours</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {attendanceHistory.map((record, idx) => (
-            <TableRow key={idx}>
-              <TableCell className="font-medium">{record.date}</TableCell>
-              <TableCell>{record.checkIn}</TableCell>
-              <TableCell>{record.checkOut}</TableCell>
-              <TableCell>{record.workHours}</TableCell>
-              <TableCell>{record.extraHours}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
     </div>
   );
 };

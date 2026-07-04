@@ -17,8 +17,15 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+const getRelativeDateStr = (daysOffset: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + daysOffset);
+  const pad = (num: number) => String(num).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
+
 const defaultAdminEmployee: Employee = {
-  id: "PPDH20220001",
+  id: "PPDH20260001",
   name: "Divya Hinduja",
   email: "divya@peoplepulse.com",
   phone: "+91 99999 88888",
@@ -38,13 +45,13 @@ const defaultAdminEmployee: Employee = {
     personalEmail: "divya@peoplepulse.com",
     gender: "Female",
     maritalStatus: "Married",
-    dateOfJoining: "2022-06-01",
+    dateOfJoining: getRelativeDateStr(-28),
     accountNumber: "912010087654321",
     bankName: "HDFC Bank",
     ifscCode: "HDFC0000004",
     panNo: "DIPHA9876C",
     uanId: "100999888777",
-    empCode: "DIR2022001"
+    empCode: "DIR2026001"
   },
   password: "password123",
   role: "admin",
@@ -67,9 +74,108 @@ const defaultAdminEmployee: Employee = {
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Initialize localStorage database with mock data if not existing
   useEffect(() => {
+    // 1. Employee records update/migration
     const saved = localStorage.getItem('pp_employees');
-    if (!saved) {
+    if (saved) {
+      try {
+        const list = JSON.parse(saved);
+        let updated = false;
+        const updatedList = list.map((emp: any) => {
+          const matchingMock = mockEmployees.find(m => m.name === emp.name);
+          if (matchingMock) {
+            if (emp.privateInfo.dateOfJoining !== matchingMock.privateInfo.dateOfJoining || emp.id !== matchingMock.id) {
+              updated = true;
+              return {
+                ...emp,
+                id: matchingMock.id,
+                privateInfo: {
+                  ...emp.privateInfo,
+                  dateOfJoining: matchingMock.privateInfo.dateOfJoining,
+                  empCode: matchingMock.privateInfo.empCode
+                }
+              };
+            }
+          } else if (emp.name === "Divya Hinduja") {
+            if (emp.privateInfo.dateOfJoining !== defaultAdminEmployee.privateInfo.dateOfJoining || emp.id !== defaultAdminEmployee.id) {
+              updated = true;
+              return {
+                ...emp,
+                id: defaultAdminEmployee.id,
+                privateInfo: {
+                  ...emp.privateInfo,
+                  dateOfJoining: defaultAdminEmployee.privateInfo.dateOfJoining,
+                  empCode: defaultAdminEmployee.privateInfo.empCode
+                }
+              };
+            }
+          }
+          return emp;
+        });
+        if (updated) {
+          localStorage.setItem('pp_employees', JSON.stringify(updatedList));
+        }
+      } catch (e) {
+        localStorage.setItem('pp_employees', JSON.stringify([defaultAdminEmployee, ...mockEmployees]));
+      }
+    } else {
       localStorage.setItem('pp_employees', JSON.stringify([defaultAdminEmployee, ...mockEmployees]));
+    }
+
+    // 2. User record update
+    const savedUser = localStorage.getItem('pp_user');
+    if (savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        const matchingMock = mockEmployees.find(m => m.name === user.name);
+        if (matchingMock && user.id !== matchingMock.id) {
+          user.id = matchingMock.id;
+          localStorage.setItem('pp_user', JSON.stringify(user));
+        } else if (user.name === "Divya Hinduja" && user.id !== defaultAdminEmployee.id) {
+          user.id = defaultAdminEmployee.id;
+          localStorage.setItem('pp_user', JSON.stringify(user));
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    // 3. Attendance records cleanup (limit to last 30 days)
+    const today = new Date();
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('pp_attendance_')) {
+        const val = localStorage.getItem(key);
+        if (val) {
+          try {
+            const list = JSON.parse(val);
+            if (Array.isArray(list)) {
+              const parsedList = list.filter((item: any) => {
+                if (!item.date) return false;
+                const parts = item.date.split('/');
+                if (parts.length !== 3) return false;
+                const itemDate = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+                // Keep only dates that are within [thirtyDaysAgo, today]
+                return itemDate >= thirtyDaysAgo && itemDate <= today;
+              });
+
+              if (parsedList.length < list.length) {
+                if (parsedList.length === 0) {
+                  localStorage.removeItem(key);
+                  i--;
+                } else {
+                  localStorage.setItem(key, JSON.stringify(parsedList));
+                }
+              }
+            }
+          } catch (e) {
+            localStorage.removeItem(key);
+            i--;
+          }
+        }
+      }
     }
   }, []);
 
@@ -153,12 +259,32 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           const key = `pp_attendance_${currentUser.id}`;
           const existingSaved = localStorage.getItem(key);
+          const getMockAttendanceDates = () => {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const monday = new Date(today);
+            const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+            monday.setDate(diff);
+
+            const pad = (num: number) => String(num).padStart(2, '0');
+            const formatDate = (d: Date) => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+
+            const dates = [];
+            for (let i = 0; i < 5; i++) {
+              const day = new Date(monday);
+              day.setDate(monday.getDate() + i);
+              dates.push(formatDate(day));
+            }
+            return dates;
+          };
+
+          const mockDates = getMockAttendanceDates();
           const list = existingSaved ? JSON.parse(existingSaved) : [
-            { date: '28/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
-            { date: '29/10/2025', checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
-            { date: '30/10/2025', checkIn: '09:45', checkOut: '18:45', workHours: '09:00', extraHours: '00:00' },
-            { date: '31/10/2025', checkIn: '10:15', checkOut: '19:30', workHours: '09:15', extraHours: '01:15' },
-            { date: '01/11/2025', checkIn: '10:00', checkOut: '18:00', workHours: '08:00', extraHours: '00:00' },
+            { date: mockDates[0], checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
+            { date: mockDates[1], checkIn: '10:00', checkOut: '19:00', workHours: '09:00', extraHours: '01:00' },
+            { date: mockDates[2], checkIn: '09:45', checkOut: '18:45', workHours: '09:00', extraHours: '00:00' },
+            { date: mockDates[3], checkIn: '10:15', checkOut: '19:30', workHours: '09:15', extraHours: '01:15' },
+            { date: mockDates[4], checkIn: '10:00', checkOut: '18:00', workHours: '08:00', extraHours: '00:00' },
           ];
           
           list.push(newRecord);

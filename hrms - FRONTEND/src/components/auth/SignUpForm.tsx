@@ -71,7 +71,8 @@ export const SignUpForm: React.FC = () => {
     const words = data.companyName.trim().split(/\s+/);
     const companyInitials = words.map(w => w[0]).join('').toUpperCase().substring(0, 3) || 'PP';
 
-    const adminId = `${companyInitials}ADM20260001`;
+    const currentYear = new Date().getFullYear();
+    const adminId = `${companyInitials}ADM${currentYear}0001`;
 
     const newAdmin: Employee = {
       id: adminId,
@@ -94,7 +95,11 @@ export const SignUpForm: React.FC = () => {
         personalEmail: data.email,
         gender: "Male",
         maritalStatus: "Single",
-        dateOfJoining: "2026-07-04",
+        dateOfJoining: (() => {
+          const d = new Date();
+          const pad = (num: number) => String(num).padStart(2, '0');
+          return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        })(),
         accountNumber: "9120100" + Math.floor(100000 + Math.random() * 900000),
         bankName: "HDFC Bank",
         ifscCode: "HDFC0000004",

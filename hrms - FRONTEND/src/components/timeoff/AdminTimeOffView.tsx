@@ -16,13 +16,20 @@ interface LeaveRequest {
   status: 'Pending' | 'Approved' | 'Rejected';
 }
 
+const getRelativeDateStr = (daysOffset: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + daysOffset);
+  const pad = (num: number) => String(num).padStart(2, '0');
+  return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+};
+
 const mockRequests: LeaveRequest[] = [
   {
     id: 'req1',
     employeeName: mockEmployees[0].name,
     avatarUrl: mockEmployees[0].avatarUrl,
-    startDate: '28/10/2025',
-    endDate: '30/10/2025',
+    startDate: getRelativeDateStr(-6),
+    endDate: getRelativeDateStr(-4),
     type: 'Paid Time Off',
     status: 'Pending',
   },
@@ -30,8 +37,8 @@ const mockRequests: LeaveRequest[] = [
     id: 'req2',
     employeeName: mockEmployees[1].name,
     avatarUrl: mockEmployees[1].avatarUrl,
-    startDate: '12/11/2025',
-    endDate: '14/11/2025',
+    startDate: getRelativeDateStr(-12),
+    endDate: getRelativeDateStr(-10),
     type: 'Sick Leave',
     status: 'Approved',
   },
@@ -39,8 +46,8 @@ const mockRequests: LeaveRequest[] = [
     id: 'req3',
     employeeName: mockEmployees[2].name,
     avatarUrl: mockEmployees[2].avatarUrl,
-    startDate: '01/12/2025',
-    endDate: '05/12/2025',
+    startDate: getRelativeDateStr(-18),
+    endDate: getRelativeDateStr(-15),
     type: 'Unpaid Leave',
     status: 'Rejected',
   },
@@ -48,8 +55,8 @@ const mockRequests: LeaveRequest[] = [
     id: 'req4',
     employeeName: mockEmployees[3].name,
     avatarUrl: mockEmployees[3].avatarUrl,
-    startDate: '10/10/2025',
-    endDate: '12/10/2025',
+    startDate: getRelativeDateStr(-24),
+    endDate: getRelativeDateStr(-22),
     type: 'Paid Time Off',
     status: 'Pending',
   },

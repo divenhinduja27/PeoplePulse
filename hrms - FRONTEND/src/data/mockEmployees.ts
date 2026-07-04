@@ -1,8 +1,15 @@
 import type { Employee } from '../types';
 
+const getRelativeDateStr = (daysOffset: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + daysOffset);
+  const pad = (num: number) => String(num).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
+
 export const mockEmployees: Employee[] = [
   {
-    id: "PPAHHE20240001",
+    id: "PPAHHE20260001",
     name: "Aarav Hegde",
     email: "aarav.hegde@peoplepulse.com",
     phone: "+91 98765 43210",
@@ -40,13 +47,13 @@ export const mockEmployees: Employee[] = [
       personalEmail: "aarav.h.personal@gmail.com",
       gender: "Male",
       maritalStatus: "Single",
-      dateOfJoining: "2024-01-15",
+      dateOfJoining: getRelativeDateStr(-25),
       accountNumber: "918020045612349",
       bankName: "HDFC Bank",
       ifscCode: "HDFC0000104",
       panNo: "ABCDE1234F",
       uanId: "100987654321",
-      empCode: "EMP2024001"
+      empCode: "EMP2026001"
     },
     password: "password123",
     role: "employee",
@@ -66,7 +73,7 @@ export const mockEmployees: Employee[] = [
     }
   },
   {
-    id: "PPSSSH20230002",
+    id: "PPSSSH20260002",
     name: "Sanya Sharma",
     email: "sanya.sharma@peoplepulse.com",
     phone: "+91 87654 32109",
@@ -97,13 +104,13 @@ export const mockEmployees: Employee[] = [
       personalEmail: "sanya.sharma.design@outlook.com",
       gender: "Female",
       maritalStatus: "Married",
-      dateOfJoining: "2023-05-10",
+      dateOfJoining: getRelativeDateStr(-20),
       accountNumber: "50100412384596",
       bankName: "ICICI Bank",
       ifscCode: "ICIC0000002",
       panNo: "FGHIJ5678K",
       uanId: "100123456789",
-      empCode: "EMP2023002"
+      empCode: "EMP2026002"
     },
     password: "password123",
     role: "employee",
@@ -123,7 +130,7 @@ export const mockEmployees: Employee[] = [
     }
   },
   {
-    id: "PPRRPA20220003",
+    id: "PPRRPA20260003",
     name: "Rohan Patel",
     email: "rohan.patel@peoplepulse.com",
     phone: "+91 76543 21098",
@@ -153,13 +160,13 @@ export const mockEmployees: Employee[] = [
       personalEmail: "rohan.patel98@gmail.com",
       gender: "Male",
       maritalStatus: "Single",
-      dateOfJoining: "2022-09-01",
+      dateOfJoining: getRelativeDateStr(-15),
       accountNumber: "109876543210",
       bankName: "State Bank of India",
       ifscCode: "SBIN0001234",
       panNo: "KLMNO9012P",
       uanId: "100234567890",
-      empCode: "EMP2022003"
+      empCode: "EMP2026003"
     },
     password: "password123",
     role: "employee",
@@ -179,7 +186,7 @@ export const mockEmployees: Employee[] = [
     }
   },
   {
-    id: "PPKKME20250004",
+    id: "PPKKME20260004",
     name: "Kavya Mehta",
     email: "kavya.mehta@peoplepulse.com",
     phone: "+91 91234 56789",
@@ -209,13 +216,13 @@ export const mockEmployees: Employee[] = [
       personalEmail: "kavya.mehta.hr@gmail.com",
       gender: "Female",
       maritalStatus: "Single",
-      dateOfJoining: "2025-02-15",
+      dateOfJoining: getRelativeDateStr(-10),
       accountNumber: "20098176541",
       bankName: "Axis Bank",
       ifscCode: "UTIB0000004",
       panNo: "QRSTU3456V",
       uanId: "100345678901",
-      empCode: "EMP2025004"
+      empCode: "EMP2026004"
     },
     password: "password123",
     role: "employee",
@@ -235,7 +242,7 @@ export const mockEmployees: Employee[] = [
     }
   },
   {
-    id: "PPVVSU20210005",
+    id: "PPVVSU20260005",
     name: "Vikram Suryavanshi",
     email: "vikram.suryavanshi@peoplepulse.com",
     phone: "+91 92345 67890",
@@ -266,13 +273,13 @@ export const mockEmployees: Employee[] = [
       personalEmail: "vikram.surya.devops@gmail.com",
       gender: "Male",
       maritalStatus: "Married",
-      dateOfJoining: "2021-11-01",
+      dateOfJoining: getRelativeDateStr(-8),
       accountNumber: "30221456987",
       bankName: "Kotak Mahindra Bank",
       ifscCode: "KKBK0000172",
       panNo: "VWXYZ7890A",
       uanId: "100456789012",
-      empCode: "EMP2021005"
+      empCode: "EMP2026005"
     },
     password: "password123",
     role: "employee",
@@ -292,7 +299,7 @@ export const mockEmployees: Employee[] = [
     }
   },
   {
-    id: "PPNNEI20230006",
+    id: "PPNNEI20260006",
     name: "Neha Iyer",
     email: "neha.iyer@peoplepulse.com",
     phone: "+91 93456 78901",
@@ -322,13 +329,13 @@ export const mockEmployees: Employee[] = [
       personalEmail: "neha.iyer.qa@gmail.com",
       gender: "Female",
       maritalStatus: "Single",
-      dateOfJoining: "2023-08-01",
+      dateOfJoining: getRelativeDateStr(-5),
       accountNumber: "60114987652",
       bankName: "IndusInd Bank",
       ifscCode: "INDB0000006",
       panNo: "BCDEF4321G",
       uanId: "100567890123",
-      empCode: "EMP2023006"
+      empCode: "EMP2026006"
     },
     password: "password123",
     role: "employee",

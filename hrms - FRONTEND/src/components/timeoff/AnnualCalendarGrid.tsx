@@ -106,28 +106,13 @@ export const AnnualCalendarGrid: React.FC<AnnualCalendarGridProps> = ({ year, ev
             <h4 className="font-bold text-sm mb-3">Public holidays</h4>
             <div className="space-y-2.5">
               <div className="flex flex-col">
-                <span className="text-xs font-semibold">Jan 14, 2026 : Kite Festival</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">Jan 26, 2026 : Republic Day</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">Mar 4, 2026 : Dhuleti</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">Aug 15, 2026 : Independence Day</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">Aug 19, 2026 : Rakhi</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">Oct 2, 2026 : Gandhi Jayanti</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">Nov 8, 2026 : Diwali</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">Nov 10, 2026 : New Year</span>
+                <span className="text-xs font-semibold">
+                  {(() => {
+                    const d = new Date();
+                    d.setDate(d.getDate() - 24);
+                    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                  })()} : Mid-Year Rest Day
+                </span>
               </div>
             </div>
           </div>
