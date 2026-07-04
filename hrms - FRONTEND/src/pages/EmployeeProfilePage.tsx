@@ -128,7 +128,7 @@ export const EmployeeProfilePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      
+
       {/* Back button and View banner */}
       <div className="flex items-center justify-between border-b border-border/40 pb-4">
         <button
@@ -154,13 +154,13 @@ export const EmployeeProfilePage: React.FC = () => {
 
       {/* Grid Layout: Left sidebar, Right main content */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-        
+
         {/* Left Column (Identity & Contact Card) */}
         <div className="lg:col-span-1 space-y-6">
           <Card className="border border-border/50 shadow-sm rounded-2xl p-5 bg-card relative overflow-hidden">
             {/* Background Accent */}
             <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-primary to-accent" />
-            
+
             <div className="flex flex-col items-center text-center pt-3">
               <Avatar className="h-20 w-20 border-2 border-border shadow-sm">
                 <AvatarImage src={employee.avatarUrl} alt={employee.name} />
@@ -168,7 +168,7 @@ export const EmployeeProfilePage: React.FC = () => {
               </Avatar>
 
               <h3 className="font-extrabold text-lg text-foreground mt-4">{employee.name}</h3>
-              
+
               <span className="text-[10px] font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded border border-border/40 mt-1.5 select-all">
                 {employee.id}
               </span>

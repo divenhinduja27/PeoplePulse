@@ -24,15 +24,15 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
       const checkInDate = new Date(checkInTime);
       const now = new Date();
       const diffMs = Math.abs(now.getTime() - checkInDate.getTime());
-      
+
       const secs = Math.floor((diffMs / 1000) % 60);
       const mins = Math.floor((diffMs / (1000 * 60)) % 60);
       const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
 
       const pad = (num: number) => String(num).padStart(2, '0');
-      
+
       const formattedInTime = checkInDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      
+
       setTimerText(`In: ${formattedInTime} (${pad(hours)}:${pad(mins)}:${pad(secs)})`);
     };
 
@@ -69,10 +69,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${
-                isActive
-                  ? 'bg-card text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
+              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
               }`
             }
           >
@@ -82,10 +81,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <NavLink
             to="/attendance"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${
-                isActive
-                  ? 'bg-card text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
+              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
               }`
             }
           >
@@ -95,10 +93,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <NavLink
             to="/timeoff"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${
-                isActive
-                  ? 'bg-card text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
+              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
               }`
             }
           >
@@ -108,10 +105,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <NavLink
             to="/attrition"
             className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${
-                isActive
-                  ? 'bg-card text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
+              `flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all select-none ${isActive
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
               }`
             }
           >
@@ -122,12 +118,12 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
         {/* User Info and Dropdown */}
         <div className="flex items-center gap-3">
-          
+
           {/* Check In / Check Out System indicator dot + button */}
           <div className="flex items-center gap-2.5 px-3 py-1 bg-muted/60 rounded-xl border border-border/40 shadow-inner mr-1.5 select-none transition-all">
             {/* Red / Green dot indicating check-in status */}
             <span className={`h-2.5 w-2.5 rounded-full ring-4 transition-all duration-300 ${isCheckedIn ? 'bg-success ring-success/20 animate-pulse' : 'bg-destructive ring-destructive/20'}`} />
-            
+
             {isCheckedIn && timerText && (
               <span className="text-[10px] font-bold font-mono text-muted-foreground mr-1">
                 {timerText}
@@ -136,11 +132,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
             <button
               onClick={toggleCheckIn}
-              className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 ${
-                isCheckedIn 
-                  ? 'bg-success/15 text-success border-success/30 hover:bg-success/25' 
+              className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 ${isCheckedIn
+                  ? 'bg-success/15 text-success border-success/30 hover:bg-success/25'
                   : 'bg-destructive/15 text-destructive border-destructive/30 hover:bg-destructive/25'
-              }`}
+                }`}
             >
               {isCheckedIn ? 'Check Out' : 'Check In'}
             </button>

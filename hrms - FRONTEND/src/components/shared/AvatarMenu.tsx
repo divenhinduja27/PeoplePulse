@@ -44,9 +44,9 @@ export const AvatarMenu: React.FC = () => {
           <UserIcon className="h-4 w-4 text-muted-foreground" />
           <span>My Profile</span>
         </DropdownMenuItem>
-        
+
         <DropdownMenuSeparator />
-        
+
         <DropdownMenuItem onClick={() => { logout(); navigate('/login'); }} className="flex items-center gap-2 text-sm text-destructive hover:bg-destructive/10">
           <LogOut className="h-4 w-4" />
           <span>Log Out</span>

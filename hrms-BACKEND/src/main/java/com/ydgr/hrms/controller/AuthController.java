@@ -20,14 +20,12 @@ public class AuthController {
 
     @PostMapping("/register-company")
     public ResponseEntity<ApiResponse> registerCompany(
-             @RequestBody CompanyRegisterRequest request) {
+            @RequestBody CompanyRegisterRequest request) {
 
         String message = authService.registerCompany(request);
 
         return ResponseEntity.ok(new ApiResponse(true, message));
     }
-
-
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(

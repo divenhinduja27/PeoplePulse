@@ -78,7 +78,7 @@ export const MyProfileTab: React.FC<MyProfileTabProps> = ({ employee, isReadOnly
 
   return (
     <div className="space-y-6">
-      
+
       {/* Basic Contact Grid */}
       <Card className="border border-border/50 shadow-sm rounded-2xl">
         <CardHeader className="pb-3">
@@ -90,7 +90,7 @@ export const MyProfileTab: React.FC<MyProfileTabProps> = ({ employee, isReadOnly
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
+
             <div className="space-y-1.5">
               <Label htmlFor="name">Full Name</Label>
               <Input
@@ -190,7 +190,7 @@ export const MyProfileTab: React.FC<MyProfileTabProps> = ({ employee, isReadOnly
 
       {/* Skills & Certifications Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
+
         {/* Skills */}
         <Card className="border border-border/50 shadow-sm rounded-2xl flex flex-col justify-between">
           <div>
@@ -224,7 +224,7 @@ export const MyProfileTab: React.FC<MyProfileTabProps> = ({ employee, isReadOnly
               </div>
             </CardContent>
           </div>
-          
+
           {!isReadOnly && (
             <div className="px-6 pb-6 pt-2 border-t border-border/40 bg-muted/10 rounded-b-2xl">
               <form onSubmit={handleAddSkill} className="flex gap-2">
@@ -275,7 +275,7 @@ export const MyProfileTab: React.FC<MyProfileTabProps> = ({ employee, isReadOnly
               </ul>
             </CardContent>
           </div>
-          
+
           {!isReadOnly && (
             <div className="px-6 pb-6 pt-2 border-t border-border/40 bg-muted/10 rounded-b-2xl">
               <form onSubmit={handleAddCert} className="flex gap-2">

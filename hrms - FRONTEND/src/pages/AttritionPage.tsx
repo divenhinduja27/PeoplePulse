@@ -98,7 +98,7 @@ export const AttritionPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      
+
       {/* Title section */}
       <div>
         <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2.5 text-foreground">
@@ -111,7 +111,7 @@ export const AttritionPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-        
+
         {/* Left Side: Onboarding/Predictor Form */}
         <Card className="border border-border/50 shadow-sm rounded-2xl bg-card">
           <CardHeader className="pb-4 border-b border-border/40">
@@ -124,7 +124,7 @@ export const AttritionPage: React.FC = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-5 space-y-4">
-            
+
             {/* Quick Fill Dropdown */}
             <div className="space-y-1.5">
               <Label htmlFor="quickFill">Quick Fill from Employee Profile</Label>
@@ -144,7 +144,7 @@ export const AttritionPage: React.FC = () => {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-1">
-              
+
               <div className="space-y-1.5">
                 <Label htmlFor="employee_name">Employee Name</Label>
                 <Input
@@ -307,13 +307,12 @@ export const AttritionPage: React.FC = () => {
                     <p className="text-[10px] text-muted-foreground leading-none mt-1">Based on random forest classification</p>
                   </div>
                   <span
-                    className={`text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-sm ${
-                      result.risk_category === 'HIGH'
+                    className={`text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-sm ${result.risk_category === 'HIGH'
                         ? 'bg-destructive/15 text-destructive border border-destructive/30'
                         : result.risk_category === 'MEDIUM'
-                        ? 'bg-warning/15 text-warning border border-warning/30'
-                        : 'bg-success/15 text-success border border-success/30'
-                    }`}
+                          ? 'bg-warning/15 text-warning border border-warning/30'
+                          : 'bg-success/15 text-success border border-success/30'
+                      }`}
                   >
                     {result.risk_category} RISK
                   </span>
@@ -326,16 +325,15 @@ export const AttritionPage: React.FC = () => {
                       <span className="text-xs font-semibold text-muted-foreground">Exit Probability</span>
                       <span className="text-xl font-extrabold font-mono text-primary leading-none">{result.risk_score}%</span>
                     </div>
-                    
+
                     <div className="h-3 rounded-full bg-muted border border-border/40 overflow-hidden">
                       <div
-                        className={`h-full rounded-full transition-all duration-500 ${
-                          result.risk_category === 'HIGH'
+                        className={`h-full rounded-full transition-all duration-500 ${result.risk_category === 'HIGH'
                             ? 'bg-destructive'
                             : result.risk_category === 'MEDIUM'
-                            ? 'bg-warning'
-                            : 'bg-success'
-                        }`}
+                              ? 'bg-warning'
+                              : 'bg-success'
+                          }`}
                         style={{ width: `${result.risk_score}%` }}
                       />
                     </div>
@@ -354,12 +352,12 @@ export const AttritionPage: React.FC = () => {
                             {factor === 'OverTime'
                               ? 'Frequent Overtime'
                               : factor === 'MonthlyIncome'
-                              ? 'Compensation Level'
-                              : factor === 'DistanceFromHome'
-                              ? 'Long Commute Distance'
-                              : factor === 'YearsAtCompany'
-                              ? 'Company Tenure'
-                              : factor}
+                                ? 'Compensation Level'
+                                : factor === 'DistanceFromHome'
+                                  ? 'Long Commute Distance'
+                                  : factor === 'YearsAtCompany'
+                                    ? 'Company Tenure'
+                                    : factor}
                           </span>
                         ))
                       ) : (

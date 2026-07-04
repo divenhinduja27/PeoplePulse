@@ -102,7 +102,6 @@ public class EmployeeService {
         return new EmployeeResponse(
                 employeeCode,
                 tempPassword,
-                "Employee Created Successfully"
-        );
+                "Employee Created Successfully");
     }
 }

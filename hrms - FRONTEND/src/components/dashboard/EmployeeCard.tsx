@@ -33,7 +33,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee }) => {
       className="cursor-pointer h-full"
     >
       <Card className="relative h-full border border-border/60 hover:border-primary/30 bg-card rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between group">
-        
+
         {/* Status Dot in top right */}
         <div className="absolute top-4 right-4">
           <StatusDot status={employee.status} />

@@ -21,7 +21,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export const LoginForm: React.FC = () => {
   const { login, completeFirstTimeReset } = useUser();
   const navigate = useNavigate();
-  
+
   // State
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +46,7 @@ export const LoginForm: React.FC = () => {
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setErrorMsg('');
-    
+
     // Simulate minor network delay
     await new Promise((resolve) => setTimeout(resolve, 800));
 
@@ -84,7 +84,7 @@ export const LoginForm: React.FC = () => {
 
     completeFirstTimeReset(resetState!.employeeId, newPassword);
     setResetSuccess(true);
-    
+
     setTimeout(() => {
       navigate('/');
     }, 1500);

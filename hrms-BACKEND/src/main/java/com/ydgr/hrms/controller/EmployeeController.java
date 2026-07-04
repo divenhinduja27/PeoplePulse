@@ -20,7 +20,6 @@ public class EmployeeController {
             @RequestBody EmployeeRequest request) {
 
         return ResponseEntity.ok(
-                employeeService.addEmployee(adminId, request)
-        );
+                employeeService.addEmployee(adminId, request));
     }
 }

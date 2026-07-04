@@ -61,8 +61,6 @@ public class AuthService {
         return "User Registered Successfully";
     }
 
-
-
     public String registerCompany(CompanyRegisterRequest request) {
 
         // 1. Check password
@@ -126,8 +124,7 @@ public class AuthService {
     public LoginResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() ->
-                        new RuntimeException("Invalid Email or Password"));
+                .orElseThrow(() -> new RuntimeException("Invalid Email or Password"));
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
@@ -140,7 +137,6 @@ public class AuthService {
                 user.getId(),
                 user.getCompany().getId(),
                 user.getRole(),
-                "Login Successful"
-        );
+                "Login Successful");
     }
 }

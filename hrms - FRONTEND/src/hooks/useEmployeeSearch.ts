@@ -14,15 +14,15 @@ export function useEmployeeSearch(employees: Employee[]) {
       const email = emp.email ? emp.email.toLowerCase() : '';
       const location = emp.location ? emp.location.toLowerCase() : '';
       const manager = emp.manager ? emp.manager.toLowerCase() : '';
-      
-      const empCode = (emp.privateInfo && emp.privateInfo.empCode) 
-        ? emp.privateInfo.empCode.toLowerCase() 
+
+      const empCode = (emp.privateInfo && emp.privateInfo.empCode)
+        ? emp.privateInfo.empCode.toLowerCase()
         : '';
-        
-      const skills = Array.isArray(emp.skills) 
-        ? emp.skills.map(s => s.toLowerCase()) 
+
+      const skills = Array.isArray(emp.skills)
+        ? emp.skills.map(s => s.toLowerCase())
         : [];
-      
+
       return (
         name.includes(query) ||
         id.includes(query) ||

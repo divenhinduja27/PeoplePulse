@@ -62,15 +62,15 @@ export const SignUpForm: React.FC = () => {
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsLoading(false);
-    
+
     // Save registered admin account to local storage employee directory
     const saved = localStorage.getItem('pp_employees');
     let list: Employee[] = saved ? JSON.parse(saved) : [...mockEmployees];
-    
+
     // Extract company initials
     const words = data.companyName.trim().split(/\s+/);
     const companyInitials = words.map(w => w[0]).join('').toUpperCase().substring(0, 3) || 'PP';
-    
+
     const adminId = `${companyInitials}ADM20260001`;
 
     const newAdmin: Employee = {
@@ -267,7 +267,7 @@ export const SignUpForm: React.FC = () => {
                   <FileImage className="h-8 w-8" />
                 </div>
               )}
-              
+
               <div className="flex-1 text-center sm:text-left">
                 <p className="text-xs font-semibold text-foreground">Upload your brand logo</p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">PNG, JPG up to 2MB</p>

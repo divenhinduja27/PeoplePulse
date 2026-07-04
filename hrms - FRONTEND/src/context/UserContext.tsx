@@ -84,7 +84,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (saved) {
         employees = JSON.parse(saved);
       }
-      
+
       const foundEmployee = employees.find(
         (emp) => emp.email.toLowerCase() === trimmedEmail.toLowerCase() || emp.id.toLowerCase() === trimmedEmail.toLowerCase()
       );
@@ -134,7 +134,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
           password: newPass
         };
         localStorage.setItem('pp_employees', JSON.stringify(employees));
-        
+
         // Log in immediately as registered role
         setCurrentUser({
           id: emp.id,
