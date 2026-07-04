@@ -108,7 +108,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: !n.read } : n));
   };
 
-  // Geofence / Check-In Logic
+  // Geofencing States
   const [isLocating, setIsLocating] = useState<boolean>(false);
   const [geofenceError, setGeofenceError] = useState<string | null>(null);
   const [showGeofenceModal, setShowGeofenceModal] = useState<boolean>(false);
