@@ -9,10 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { UserCheck, ShieldAlert, LogOut, User as UserIcon, Clock } from 'lucide-react';
+import { LogOut, User as UserIcon } from 'lucide-react';
 
 export const AvatarMenu: React.FC = () => {
-  const { currentUser, logout, toggleRole, isCheckedIn, toggleCheckIn } = useUser();
+  const { currentUser, logout } = useUser();
   const navigate = useNavigate();
 
   if (!currentUser) return null;
@@ -39,30 +39,10 @@ export const AvatarMenu: React.FC = () => {
           <span className="text-muted-foreground mt-0.5 truncate">{currentUser.email}</span>
         </div>
         <DropdownMenuSeparator />
-        
-        {/* Role Toggle for Testing */}
-        <DropdownMenuItem onClick={toggleRole} className="text-xs flex items-center justify-between font-medium">
-          <span className="flex items-center gap-2">
-            {currentUser.role === 'admin' ? (
-              <ShieldAlert className="h-4 w-4 text-primary" />
-            ) : (
-              <UserCheck className="h-4 w-4 text-accent" />
-            )}
-            Role: <span className="capitalize font-bold">{currentUser.role}</span>
-          </span>
-          <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground border border-border/40">Toggle</span>
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
 
         <DropdownMenuItem onClick={() => navigate('/profile/me')} className="flex items-center gap-2 text-sm">
           <UserIcon className="h-4 w-4 text-muted-foreground" />
           <span>My Profile</span>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem onClick={toggleCheckIn} className="flex items-center gap-2 text-sm">
-          <Clock className="h-4 w-4 text-muted-foreground" />
-          <span>{isCheckedIn ? 'Check Out' : 'Check In'}</span>
         </DropdownMenuItem>
         
         <DropdownMenuSeparator />

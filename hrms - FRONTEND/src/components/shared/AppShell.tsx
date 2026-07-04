@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { AvatarMenu } from './AvatarMenu';
@@ -10,8 +10,37 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = ({ children }) => {
-  const { currentUser, isCheckedIn, toggleCheckIn } = useUser();
+  const { currentUser, isCheckedIn, checkInTime, toggleCheckIn } = useUser();
   const location = useLocation();
+  const [timerText, setTimerText] = useState<string>('');
+
+  useEffect(() => {
+    if (!isCheckedIn || !checkInTime) {
+      setTimerText('');
+      return;
+    }
+
+    const updateTimer = () => {
+      const checkInDate = new Date(checkInTime);
+      const now = new Date();
+      const diffMs = Math.abs(now.getTime() - checkInDate.getTime());
+      
+      const secs = Math.floor((diffMs / 1000) % 60);
+      const mins = Math.floor((diffMs / (1000 * 60)) % 60);
+      const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+
+      const pad = (num: number) => String(num).padStart(2, '0');
+      
+      const formattedInTime = checkInDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+      setTimerText(`In: ${formattedInTime} (${pad(hours)}:${pad(mins)}:${pad(secs)})`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, [isCheckedIn, checkInTime]);
 
   if (!currentUser) {
     return <>{children}</>;
@@ -98,6 +127,13 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <div className="flex items-center gap-2.5 px-3 py-1 bg-muted/60 rounded-xl border border-border/40 shadow-inner mr-1.5 select-none transition-all">
             {/* Red / Green dot indicating check-in status */}
             <span className={`h-2.5 w-2.5 rounded-full ring-4 transition-all duration-300 ${isCheckedIn ? 'bg-success ring-success/20 animate-pulse' : 'bg-destructive ring-destructive/20'}`} />
+            
+            {isCheckedIn && timerText && (
+              <span className="text-[10px] font-bold font-mono text-muted-foreground mr-1">
+                {timerText}
+              </span>
+            )}
+
             <button
               onClick={toggleCheckIn}
               className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border transition-all duration-200 ${

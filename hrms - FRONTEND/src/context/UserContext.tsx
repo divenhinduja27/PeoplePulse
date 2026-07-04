@@ -8,6 +8,7 @@ interface UserContextType {
   logout: () => void;
   toggleRole: () => void;
   isCheckedIn: boolean;
+  checkInTime: string | null;
   toggleCheckIn: () => void;
   completeFirstTimeReset: (employeeId: string, newPass: string) => void;
 }
@@ -34,6 +35,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return saved === 'true';
   });
 
+  const [checkInTime, setCheckInTime] = useState<string | null>(null);
+
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem('pp_user', JSON.stringify(currentUser));
@@ -48,13 +51,28 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (currentUser) {
       const saved = localStorage.getItem(`pp_checked_in_${currentUser.id}`);
       setIsCheckedIn(saved === 'true');
+      const time = localStorage.getItem(`pp_check_in_time_${currentUser.id}`);
+      setCheckInTime(time);
     } else {
       setIsCheckedIn(false);
+      setCheckInTime(null);
     }
   }, [currentUser]);
 
   const toggleCheckIn = () => {
-    setIsCheckedIn((prev) => !prev);
+    if (!currentUser) return;
+    setIsCheckedIn((prev) => {
+      const next = !prev;
+      if (next) {
+        const timeStr = new Date().toISOString();
+        localStorage.setItem(`pp_check_in_time_${currentUser.id}`, timeStr);
+        setCheckInTime(timeStr);
+      } else {
+        localStorage.removeItem(`pp_check_in_time_${currentUser.id}`);
+        setCheckInTime(null);
+      }
+      return next;
+    });
   };
 
   const login = (email: string, pass: string): { success: boolean; isFirstTimeEmployee?: boolean; employeeId?: string } => {
@@ -145,7 +163,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser, login, logout, toggleRole, isCheckedIn, toggleCheckIn, completeFirstTimeReset }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser, login, logout, toggleRole, isCheckedIn, checkInTime, toggleCheckIn, completeFirstTimeReset }}>
       {children}
     </UserContext.Provider>
   );
